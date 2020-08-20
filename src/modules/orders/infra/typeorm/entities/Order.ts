@@ -16,12 +16,13 @@ class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToMany(() => Customer)
-  @JoinColumn({ name: 'order_products' })
+  @ManyToOne(() => Customer)
+  @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
-  @ManyToOne(() => OrdersProducts)
-  @JoinColumn({ name: 'customer' })
+  @OneToMany(() => OrdersProducts, order_products => order_products.order, {
+    cascade: true,
+  })
   order_products: OrdersProducts[];
 
   @CreateDateColumn()
